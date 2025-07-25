@@ -22,7 +22,7 @@
   align-items: center;
   margin-top: 2rem;
 }
-@media (max-width: 425px) {
+@media (max-width: 768px) {
   #gameBoard {
     grid-template-columns: repeat(2, 1fr);
 }
