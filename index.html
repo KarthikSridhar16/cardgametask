@@ -1,0 +1,34 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-green-100 font-sans min-h-screen flex flex-col items-center p-6">
+
+    <header class="w-full max-w-5xl flex justify-between items-center mb-6">
+        <h1 class="text-3xl justify-between font-bold text-gray-800">Memory Card Challenge</h1>
+        <button id="restartBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            Restart
+        </button>
+    </header>
+
+    <section class="w-full max-w-5xl flex justify-between items-center mb-4">
+        <div class="text-lg font-semibold text-gray-700">
+            Streak 🔥: <span id="streakCount">0</span>
+        </div>
+        <div class="relative">
+            <img src="assets/cards/back.png" alt="deck" class="w-24 h-36 object-contain shadow-lg transition-transform duration-200 hover:scale-105" />
+            <span class="absolute bottom-0 right-0 text-xs bg-grey-700 text-white px-2 py-3 rounded">Deck</span>
+        </div>
+    </section>
+
+    <main id="gameBoard" class="grid grid-cols-5 sm:grid-cols-4 gap-4 max-w-5xl w-full">
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
