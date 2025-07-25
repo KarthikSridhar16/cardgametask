@@ -76,7 +76,7 @@ function renderCards() {
 
     currentDraw.forEach((cards, index) => {
         const cardContainer = document.createElement("div");
-        cardContainer.className = "card w-20 h-28 sm:w-24 sm:h-36 relative perspective cursor-pointer animate-draw";
+       cardContainer.className = "card w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 xl:w-36 xl:h-48 relative perspective cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out animate-draw";
         cardContainer.dataset.index = index;
 
         cardContainer.innerHTML = `

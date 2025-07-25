@@ -14,6 +14,20 @@
   transform: rotateY(180deg);
 }
 
+#gameBoard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  justify-items: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+@media (max-width: 425px) {
+  #gameBoard {
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+
 .card-front,
 .card-back {
   width: 100%;
@@ -41,4 +55,14 @@
 
 .animate-draw {
   animation: drawFromDeck 0.5s ease-out;
+}
+
+@media (max-width: 639px) {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
