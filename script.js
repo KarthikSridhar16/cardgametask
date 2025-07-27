@@ -199,6 +199,26 @@ document.getElementById("restartBtn").addEventListener("click", () => {
   renderCards();
 })
 
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("gamePopup");
+  const closeBtn = document.getElementById("closePopup");
+  const startBtn = document.getElementById("startGame");
+
+  function closePopup() {
+    popup.classList.remove("fade-in");
+    popup.classList.add("fade-out");
+
+    setTimeout(() => {
+      popup.style.display = "none";
+    }, 300);
+  }
+
+  closeBtn.addEventListener("click", closePopup);
+  startBtn.addEventListener("click", closePopup);
+});
+
+
+
 generateFullDeck();
 drawTenCards();
 renderCards();

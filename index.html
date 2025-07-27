@@ -10,6 +10,15 @@
           extend: {
             backgroundImage: {
               'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'scale(0.9)' },
+                '100%': { opacity: '1', transform: 'scale(1)' },
+              },
+            },
+            animation: {
+              fadeIn: 'fadeIn 0.4s ease-out forwards',
             }
           }
         }
@@ -48,6 +57,21 @@
       id="gameBoard"
       class="grid grid-cols-2 sm:grid-cols-5 gap-4 justify-items-center mt-6 w-full max-h-[75vh] overflow-y-auto sm:overflow-visible sm:max-h-none scrollbar-hide">
     </main>
+
+    <div id="gamePopup" class="fixed inset-0 z-50 flex justify-center items-center fade-in">
+      <div class="absolute inset-0 bg-black/40 backdrop-blur-sm z-40"></div>
+      <div class="bg-gray-400/60 backdrop-blur-lg text-white rounded-lg p-6 max-w-md text-center shadow-xl relative z-50 transition-all duration-300 border border-white/20">
+        <button id="closePopup" class="absolute top-2 right-3 text-gray-600 hover:text-black text-xl">&times;</button>
+        <h2 class="text-2xl font-bold mb-4 text-blue-800">Welcome to Card Challenge!</h2>
+        <p class="text-white-700 mb-4 text-sm sm:text-base leading-relaxed">
+          Flip two cards at a time and try to match the pairs. You have only 3 lives! If you fail to match, your lives reduce.
+          Try to get the highest streak. Good luck, and have fun! 🎯
+        </p>
+        <button id="startGame" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+          Let's Start!
+        </button>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
