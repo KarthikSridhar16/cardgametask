@@ -6,6 +6,12 @@ let currentDraw = []
 let selectedCards = []
 let winningStreak = 0;
 let isFlipping = false;
+let lives = 3;
+const livesDisplay = document.createElement('div');
+livesDisplay.id = 'livesDisplay';
+livesDisplay.className = "text-base sm:text-lg font-semibold text-gray-700 ml-4";
+livesDisplay.innerText = `Lives ❤️: ${lives}`;
+document.querySelector('header').appendChild(livesDisplay);
 
 function generateFullDeck() {
     fullDeck = [];
@@ -71,25 +77,49 @@ function shuffle(array) {
 }
 
 function renderCards() {
-    const board = document.getElementById("gameBoard");
-    board.innerHTML = "";
+  const board = document.getElementById("gameBoard");
+  board.innerHTML = "";
 
-    currentDraw.forEach((cards, index) => {
-        const cardContainer = document.createElement("div");
-       cardContainer.className = "card w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 xl:w-36 xl:h-48 relative perspective cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out animate-draw";
-        cardContainer.dataset.index = index;
+  const deckEl = document.getElementById("deck");
+  const deckRect = deckEl.getBoundingClientRect();
 
-        cardContainer.innerHTML = `
-        <div class="card-inner w-full h-full">
+  currentDraw.forEach((card, index) => {
+    const cardContainer = document.createElement("div");
+    cardContainer.className = "card w-20 h-28 sm:w-24 sm:h-32 md:w-28 md:h-36 lg:w-32 lg:h-40 xl:w-36 xl:h-48 relative perspective cursor-pointer hover:scale-105 transition-transform duration-200 ease-in-out";
+    cardContainer.dataset.index = index;
+
+    cardContainer.innerHTML = `
+      <div class="card-inner w-full h-full">
         <img src="assets/cards/back.png" class="card-front" />
-        <img src="${cards.imagePath}" class= "card-back" />
-        </div>
-        `;
+        <img src="${card.imagePath}" class="card-back" />
+      </div>
+    `;
 
-        cardContainer.addEventListener("click", () => handleCardClick(cards, cardContainer));
-        board.appendChild(cardContainer);
+    board.appendChild(cardContainer);
+
+    const targetRect = cardContainer.getBoundingClientRect();
+
+    const offsetX = deckRect.left - targetRect.left;
+    const offsetY = deckRect.top - targetRect.top;
+
+    cardContainer.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(0.5)`;
+    cardContainer.style.opacity = 0;
+    cardContainer.style.transition = "none";
+    cardContainer.style.position = "relative";
+
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        cardContainer.style.transition = "transform 0.6s ease, opacity 0.6s";
+        cardContainer.style.transform = "translate(0, 0) scale(1)";
+        cardContainer.style.opacity = 1;
+      }, index * 100);
     });
+
+    cardContainer.addEventListener("click", () => handleCardClick(card, cardContainer));
+  });
 }
+
+
 
 function handleCardClick(card, cardE1) {
     if (isFlipping || cardE1.classList.contains("flipped")) return;
@@ -105,19 +135,30 @@ function handleCardClick(card, cardE1) {
 
             winningStreak++;
             updateStreakUI();
+            lives = 3;
+            livesDisplay.innerText = `Lives ❤️: ${lives}`;
             setTimeout(() => {
                 selectedCards = [];
                 isFlipping = false;
                 drawNextRound();
             }, 1000);
-        }else{
+        } else {
             setTimeout(() => {
                 first.element.classList.remove("flipped");
                 second.element.classList.remove("flipped");
-                gameOver();
+                selectedCards = [];
+                isFlipping = false;
+
+                lives--;
+                livesDisplay.innerText = `Lives ❤️: ${lives}`;
+
+                if (lives === 0) {
+                    gameOver();
+                }
             }, 1000);
         }
-    }
+
+     }
 }
 
 function updateStreakUI() {
@@ -139,6 +180,8 @@ function gameOver() {
     winningStreak = 0;
     updateStreakUI();
     selectedCards= [];
+    lives = 3;
+    livesDisplay.innerText = `Lives ❤️: ${lives}`;
     isFlipping = false;
     setTimeout(() => {
     drawTenCards();
@@ -148,6 +191,8 @@ function gameOver() {
 
 document.getElementById("restartBtn").addEventListener("click", () => {
   winningStreak = 0;
+  lives = 3;
+  livesDisplay.innerText = `Lives ❤️: ${lives}`;
   updateStreakUI();
   generateFullDeck();
   drawTenCards();
